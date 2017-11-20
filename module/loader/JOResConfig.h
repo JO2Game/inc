@@ -38,8 +38,10 @@ public:
 public:	
 	/************************************************************************/
 	/* 图片资源加载配置文件 
+	/* keyname用于标志, 方便回索删除数据
 	/************************************************************************/
-	bool loadSrcConfig(const std::string& fPath, const std::string& basePath);
+	bool loadSrcConfig(const std::string& fPath, const std::string& basePath, const std::string& keyname);
+	void removeConfig(const std::string& keyname);
 	/************************************************************************/
 	/* 手动添加图片配置
 	/************************************************************************/
@@ -57,8 +59,10 @@ public:
 public:
 	/************************************************************************/
 	/* 添加ani配置文件的搜索路径
+	/* keyname用于标志, 方便回索删除数据
 	/************************************************************************/
-	void addAniBasePath(const std::string& aniPath);
+	void addAniBasePath(const std::string& aniPath, const std::string& keyname);
+	void removeAniBasePath(const std::string& keyname);
 	/************************************************************************/
 	/* 通过aniKey获取所需要图集plist信息
 	/************************************************************************/
@@ -81,7 +85,7 @@ public:
 
 public:
 	/************************************************************************/
-	/* 生成相关配置文件
+	/* 生成相关配置文件 工具调用
 	/* srcPath 源路径 destPath 目标路径 ellipsis 省略路径 
 	/* outName 配置的文件名 (包括后缀)
 	/************************************************************************/
@@ -119,11 +123,17 @@ protected:
 	RES_SRC_MAP m_plist_srcMap;
 	RES_SRC_MAP m_key_srcMap;
 
+	// 用于回索
+	typedef std::unordered_map< std::string, std::vector<std::string> > BACK_INDEX;
+	BACK_INDEX m_back_srcMap;
+	BACK_INDEX m_back_plistMap;
+	BACK_INDEX m_back_keyMap;
 protected:
 	//std::string m_aniBasePath;
 	typedef std::unordered_map< std::string, std::list<std::string> > RES_ANI_MAP;
 	RES_ANI_MAP m_aniMap;
 	std::list<std::string> m_aniPaths;
+	BACK_INDEX m_back_aniPathMap;
 
 protected:
 	RES_ARM_MAP m_arm_armMap;

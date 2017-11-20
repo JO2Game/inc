@@ -21,8 +21,8 @@ public:
 	virtual ~JOIImg();
 
 public:
-	void setKey(const std::string& imgName, bool isAsyn = true);
-	void setSource(const std::string& filePath, const std::string& imgName, bool isAsyn = true, short pixelFormat = (short)Texture2D::PixelFormat::RGBA8888);
+	virtual void setKey(const std::string& imgName, bool isAsyn = true);
+	virtual void setSource(const std::string& filePath, const std::string& imgName, bool isAsyn = true, short pixelFormat = (short)Texture2D::PixelFormat::RGBA8888);
 
 	/************************************************************************/
 	/* 折构时由子类调用
@@ -36,7 +36,6 @@ public:
 	inline std::string getSourcePath(){ return m_sourcePath; }
 
 	inline unsigned int getSn(){ return m_sn; }
-	void setLoadType(short loadType);
 public:
 	void _loadComplete(Texture2D* tex, std::string source, short resType, JODataCoder* dataCoder, int index, int totalCount);
 	
@@ -59,10 +58,29 @@ protected:
 	std::string m_tmpImgName;
 
 	unsigned int m_sn;
-	short m_loadType;
-	bool m_loadDirty;
+
+};
+/*
+class JO_DLL JOIImgSprite : public Sprite, public JOIImg
+{
+protected:
+	virtual void _loadStart(){};
+	virtual void _loadEnd(){};
+	virtual bool _isLoading(){ return false; };
+	virtual void _loadCancel(){};
+	virtual void _emptyTexture(){};
 };
 
+class JO_DLL JOIImgScale9Sprite : public ui::Scale9Sprite, public JOIImg
+{
+protected:
+	virtual void _loadStart(){};
+	virtual void _loadEnd(){};
+	virtual bool _isLoading(){ return false; };
+	virtual void _loadCancel(){};
+	virtual void _emptyTexture(){};
+};
+*/
 NS_JOFW_END
 
 #endif //__JOIMG_INTERFACE_H__

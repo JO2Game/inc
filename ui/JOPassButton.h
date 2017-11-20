@@ -18,7 +18,7 @@ public:
 	virtual ~JOPassButton();
 	enum{PASS_LEFT=1, PASS_RIGHT, PASS_TOP, PASS_BOTTOM};
 public:
-	static JOPassButton* create(const std::string& key, const std::string& passKey, BUTTON_CALL call, bool bScale = false, const std::string& title = "");
+	static JOPassButton* create(const std::string& key, const std::string& passKey, BUTTON_CALL call, const std::string& title = "");
 	
 	void setDirect(short direct);
 	void setPassImgKey(const std::string& key);

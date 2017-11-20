@@ -8,6 +8,9 @@
 
 #include "ui/JOUIDef.h"
 
+#include "ui/JOIImg.h"
+#include "ui/JOIImgSet.h"
+
 #include "ui/JOSprite.h"
 #include "ui/JOScale9Sprite.h"
 #include "ui/JOLabel.h"

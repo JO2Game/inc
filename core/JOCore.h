@@ -20,10 +20,13 @@
 #include "core/gesture/SampleGestures.h"
 
 #include "core/socket/JOSocket.h"
+#include "core/socket/JODownloader.h"
 
 //#include "core/sql/JOSqlQuary.h"
 #include "core/sql/JOSqlReader.h"
 #include "core/sql/JOSQL.h"
+
+
 
 
 #endif // !__JOFRAMEWORK_CORE_H__

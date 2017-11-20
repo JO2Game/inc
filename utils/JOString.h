@@ -147,7 +147,7 @@ public:
 	/************************************************************************/
 	/* 把二进制转换成字符串形式, 一般用于输出查看
 	/************************************************************************/
-	static string data2String(const char* pData, unsigned int len);
+	static string data2String(const unsigned char* pData, unsigned int len);
 
 	/************************************************************************/
 	/* ffffff转成COLOR， 不成功时返回ccc3b(0,0,0)

@@ -74,7 +74,6 @@ public:
 	virtual void onSocketDidDisconnected(JOSocket* socket){ };
 
     virtual void onSocketDidReadData(JOSocket* socket,JODataCoder* dataCoder){};
-	virtual JODataCoder* onSocketDidReadPartialData(JOSocket* socket, unsigned char* pData, unsigned int size, unsigned int* len){ return nullptr; };
     virtual void onSocketDidWriteData(JOSocket* socket){};
 
 	virtual void onSocketWithError(JOSocket* socket, JOSocketError error){};
@@ -100,34 +99,41 @@ public:
 
 	inline void setSocketId(short id){ m_socketId = id; }
 	inline short getSocketId(){ return m_socketId; }	
+	inline void setBigEndian(bool isBigEndian){ m_isBigEndian = isBigEndian; }
+
+	JOSocketDelegate*   getDelegate();
+	void setDelegate(JOSocketDelegate* delegate);
+
+	void connect(std::string& ip, unsigned int port, bool async = true);
+	void disconnect();
+	void writeData(JODataCoder* dataCoder);
+
+	bool isConnect();
+
 protected:
-	static void _clearThread();
-
 	short				m_socketId;	
-
+	bool				m_isBigEndian;
     string              m_szIP;
     int                 m_nPort;
     int                 m_nSocketHandle;
+
+	bool bConnect_;
+	bool m_isClosing;
     
     JOSocketDelegate*   m_pDelegate;
-	JOLock	m_delegateLock;
 	JOLock	m_socketLock;
 	std::mutex m_sendMutex;
 	std::condition_variable m_sendCV;
-	
-public:
-        
-	JOSocketDelegate*   getDelegate();
-	void setDelegate(JOSocketDelegate* delegate);
-    
-    int connect(const char* ip, unsigned int port, bool async = true);
-    void disconnect();
-	void writeData(JODataCoder* dataCoder);
 
-    void clearBuffer();
-    bool isConnect();
-    
-protected:    
+	std::thread t1;
+	std::thread t2;
+	std::thread t3;
+
+	unsigned int m_sn;
+
+protected:
+	void _clearThread();
+	void _clearBuffer();
     void closeWithError(JOSocketError error);    
         
 #pragma mark JOSocket Reading    
@@ -137,8 +143,8 @@ protected:
 #pragma mark JOSocket ReadWritestream
 protected:
     
-    static bool m_bWriteStreamCreated;    
-	static bool m_bReadStreamCreated;
+    bool m_bWriteStreamCreated;    
+	bool m_bReadStreamCreated;
     // thread function
     void writeStreamThread();
 	void readStreamThread();
@@ -151,9 +157,7 @@ protected:
 protected:    
     void connectThread();
 	void _createStream();
-    
-protected:
-    bool bConnect_;
+
 };
 
 NS_JOFW_END

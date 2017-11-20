@@ -29,6 +29,9 @@ public:
 	static JOScale9Sprite* create(const std::string& filePath, const std::string& imgName, bool isAsyn = true, short pixelFormat = (short)Texture2D::PixelFormat::RGBA8888, LoadSpriteCall call = nullptr);
 
 	void setCallback(LoadSpriteCall call);
+	//true即每次通过setKey后,九宫格都会保持原来大小
+	//false的话,九宫格会是新设置图片的原始大小
+	inline void beFitSize(bool beFit){ m_beFit = beFit; };
 protected:
 	virtual void _loadStart();
 	virtual void _loadEnd();
@@ -39,8 +42,9 @@ protected:
 	void _resetInset(Rect& org);
 protected:
 	
-	LoadSpriteCall m_loadCall;	
-	JOSprite* m_srcSprite;
+	LoadSpriteCall	m_loadCall;	
+	JOSprite*		m_srcSprite;
+	bool			m_beFit;
 };
 
 NS_JOFW_END

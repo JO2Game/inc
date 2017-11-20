@@ -31,8 +31,6 @@ public:
 	
 public:
    
-	// Adjusting Capacity
-	void increaseLength(unsigned int extraLen);
 	void setLength(unsigned int len);	
 
 	// Adding Data
@@ -45,7 +43,7 @@ public:
 	/* Modifying Data
 	/* not include end
 	/************************************************************************/
-	void replaceBytesInRange(unsigned int begin, unsigned int end, void* pBytes, unsigned int size);
+	void replaceBytesInRange(int begin, int end, void* pBytes, unsigned int size);
 	void resetBytes(unsigned int begin, unsigned int end);
 
 private:

@@ -25,6 +25,7 @@ public:
 	void removeAnimationsWithKey(const std::string& aniKey);
 	cocos2d::Animation* getAnimation(const std::string& name);
 	bool getAnimationsWithAniKey(const std::string& aniKey, std::unordered_map<std::string, cocos2d::Animation*> &outMap);
+	bool haveAnimationsWithAniKey(const std::string& aniKey);
 
 public:
 	void tick();

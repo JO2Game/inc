@@ -14,6 +14,8 @@
 #include "core/socket/JOSocket.h"
 
 
+
+
 NS_JOFW_BEGIN
 class JODataCoder;
 
@@ -28,22 +30,27 @@ public:
 	void initMainSocketId(int id);
 
 public:
-	void connect(const char* ip, unsigned int port, bool beAsyn, int socketId = -1);
+	void connect(std::string& ip, unsigned int port, bool beAsyn, bool isBigEndian, int socketId = -1);
 	bool disconnect(int socketId = -1);
 	void sendMessage(JODataCoder* dataCoder, int socketId = -1);
 
-	void setBigEndian(bool bigEndian);
-	inline bool getBigEndian(){ return m_bBigEndian; };
+	//void setBigEndian(bool bigEndian);
+	//inline bool getBigEndian(){ return m_bBigEndian; };
 	JO_SYNTHESIZE(bool, m_bDebug, Debug);
 private:
 	void _disconnectAll();
 private:
 	JOSocket* _getSocket(int id);
 	JOSocket* _findSocket(int id);
-
+	enum{
+		SOCKET_EVENT_CONNECT = 11,
+		SOCKET_EVENT_DISCONNECT,
+		SOCKET_EVENT_CONNECT_FAIL,
+		SOCKET_EVENT_RECV_OP,
+	};
 private:
 	short m_mainSocketId;
-	bool m_bBigEndian;
+	//bool m_bBigEndian;
 
 	typedef unordered_map<short, JOSocket*> SOCKET_MAP;
 	SOCKET_MAP socket_map;
@@ -56,7 +63,6 @@ public:
 	virtual void onSocketDidDisconnected(JOSocket* socket);
 
 	virtual void onSocketDidReadData(JOSocket* socket, JODataCoder* dataCoder);
-	virtual JODataCoder* onSocketDidReadPartialData(JOSocket* socket, unsigned char* pData, unsigned int size, unsigned int* len);
 	virtual void onSocketDidWriteData(JOSocket* socket);
 
 	virtual void onSocketWithError(JOSocket* socket, JOSocketError error);

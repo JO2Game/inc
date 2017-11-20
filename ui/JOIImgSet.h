@@ -29,7 +29,7 @@ public:
 	void clearSource();
 
 	inline unsigned int getSn(){ return m_sn; }
-	void setLoadType(short loadType);
+
 public:
 	void _loadComplete(Texture2D* tex, std::string source, short resType, JODataCoder* dataCoder, int index, int totalCount);
 	
@@ -50,8 +50,6 @@ protected:
 	CompLeteCall m_comLeteCall;
 	
 	unsigned int m_sn;
-	short m_loadType;
-	bool m_loadDirty;
 };
 
 NS_JOFW_END

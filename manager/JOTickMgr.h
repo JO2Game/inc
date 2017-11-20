@@ -28,6 +28,17 @@ public:
 	bool beRemove = false;
 };
 
+class JO_DLL TickFunctInThreadVO
+{
+public:
+	TickFunctInThreadVO();
+	void init();
+	void run();
+public:
+	std::function<void(void)> c_funct;
+	bool beRemove;
+	unsigned int sn;
+};
 
 class JO_DLL JOTickMgr : public JOSingleton<JOTickMgr>
 {
@@ -48,7 +59,8 @@ public:
     void tick(float dt);
 
 public:
-	void runInMainThread(const std::function<void()> &function);
+	void runInMainThread(unsigned int sn, const std::function<void()> &function);
+	void cancelInMainRun(unsigned int sn);
     
 private:
 	typedef std::unordered_map<unsigned int, JOTickVO*> TICK_MAP;
@@ -58,7 +70,8 @@ private:
 	unsigned int m_tickCount;
 
 private:
-	std::list< std::function<void()> > _functionsToPerform;
+	
+	std::list< TickFunctInThreadVO* >  _functionsToPerform;
 	JOLock _performMutex;
 
 };

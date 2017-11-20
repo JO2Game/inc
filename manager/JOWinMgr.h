@@ -28,7 +28,7 @@ public:
 public:
 	Node* getLayer(int layerTag);
 	
-	void showWin(Node* win, int layerTag);
+	void showWin(Node* win, int layerTag, bool isCenter=true);
 	void clear(int layerTag);
 	void clearAll();
 
@@ -70,7 +70,7 @@ protected:
 
 	Node*			m_curScene;
 	Node*			m_curHome;
-	Node*			m_curWait;
+
 	Node*			m_debugWait;
 	typedef std::list<Node*> WIN_LIST;
 	WIN_LIST		m_logicWinList;
@@ -78,6 +78,8 @@ protected:
 
 	typedef std::unordered_map<unsigned short, Node*> WIN_MAP;
 	WIN_MAP			m_winMap;
+
+	std::unordered_map<unsigned short, unsigned long long> m_winZorderMap;
 };
 
 #define SHOW_WIN(key) JOWinMgr::Instance()->showWin(JOWinMgr::Instance()->getWin(key), JOWinMgr::WIN);

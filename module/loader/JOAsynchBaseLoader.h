@@ -20,12 +20,12 @@ NS_JOFW_BEGIN
 //class JODataBundle;
 class JODataCoder;
 class JOAsynchLoaderVO;
-typedef std::function<void(cocos2d::Texture2D*, std::string, short, JODataCoder*, unsigned short, unsigned short)> CompLeteCall;
+typedef std::function<void(cocos2d::Texture2D*, const std::string&, short, JODataCoder*, unsigned short, unsigned short)> CompLeteCall;
 
 /*
 用于异步加载精灵回调
 */
-typedef std::function<void(cocos2d::Node*, std::string, std::string)> LoadSpriteCall;
+typedef std::function<void(cocos2d::Node*, std::string&, std::string&)> LoadSpriteCall;
 
 class JO_DLL JOAsynchBaseLoader
 {
@@ -39,7 +39,7 @@ public:
 	参数1是加载的文件路径或集合， 参数2是加载完的回调， 参数3、4是逻辑传入，用于回调的参数
 	*/
 	
-	void load(unsigned int sn, const std::string srcPath, short resType, const CompLeteCall loadCompleteCall, JODataCoder* dataCoder = nullptr, cocos2d::Texture2D::PixelFormat pixel = cocos2d::Texture2D::PixelFormat::NONE);
+	void load(unsigned int sn, const std::string& srcPath, short resType, const CompLeteCall loadCompleteCall, JODataCoder* dataCoder = nullptr, cocos2d::Texture2D::PixelFormat pixel = cocos2d::Texture2D::PixelFormat::NONE);
 	void load(unsigned int sn, std::list<std::string> srcPathList, short resType, const CompLeteCall loadCompleteCall, JODataCoder* dataCoder = nullptr, cocos2d::Texture2D::PixelFormat pixel = cocos2d::Texture2D::PixelFormat::NONE);
 
 	void cancelLoad(unsigned int sn);
@@ -58,7 +58,7 @@ protected:
 	void _handleCallAsynch(JOAsynchLoaderVO* vo);
 	void _handleComple(cocos2d::Texture2D* tex, JOAsynchLoaderVO* vo);
 
-	bool _loadVo(const std::string srcPath, short resType, CompLeteCall loadCompleteCall, LUA_FUNCTION luaCompleteCall, JODataCoder* dataCoder, unsigned short idx, unsigned short total);
+	bool _loadVo(const std::string& srcPath, short resType, CompLeteCall loadCompleteCall, LUA_FUNCTION luaCompleteCall, JODataCoder* dataCoder, unsigned short idx, unsigned short total);
 	unsigned int _snFindCurIdx(unsigned int sn, unsigned int total);
 
 	void _addSnVoRecord(JOAsynchLoaderVO* vo);

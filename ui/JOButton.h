@@ -9,17 +9,17 @@ USING_NS_CC;
 #include "utils/JOMacro.h"
 #include "utils/JOClsMemoryPool.h"
 #include "module/loader/JOAsynchBaseLoader.h"
+#include "ui/JOScale9Sprite.h"
 
 NS_JOFW_BEGIN
 
 class JOButton;
 class JOSprite;
-class JOScale9Sprite;
 class JOLabel;
 
 typedef std::function<void(JOButton*, short, Touch*)> BUTTON_CALL;
 
-class JO_DLL JOButton : public Node
+class JO_DLL JOButton : public JOScale9Sprite
 {
 	JO_CLS_MPOOL_DECLARE(JOButton);
 	static short		s_zoomMode;
@@ -44,11 +44,11 @@ public:
 	virtual ~JOButton();
 public:
 	static JOButton* create(const std::string& key = "");
-	static JOButton* create(const std::string& key, BUTTON_CALL call, bool bScale = false, const std::string& title = "");
-	bool init(const std::string& key, BUTTON_CALL call, bool bScale = false, const std::string& title = "");
+	static JOButton* create(const std::string& key, BUTTON_CALL call, const std::string& title = "");
+	bool init(const std::string& key, BUTTON_CALL call, const std::string& title = "");
 	inline void setCall(BUTTON_CALL call){ m_call = call; };
 
-	void setKey(const std::string& key);
+	virtual void setKey(const std::string& key);
 	
 	void setScaleEnable(bool enable);
 	void setZoomMode(short zoomMode);
@@ -66,7 +66,7 @@ public:
 	void setTitleArg(const std::string& fName, short fSize, Color3B fColor = s_fcolor, short blodSize = s_boldsize, Color4B outColor = s_outcolor);
 	std::string getTitleString();
 public:
-	virtual void setContentSize(const Size& contentSize);
+	
 	
 	virtual bool onTouchBegan(Touch *pTouch, Event *pEvent);
 	virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
@@ -80,12 +80,9 @@ protected:
 	void _touchScaleEndHandle();
 	void _touchScaleCancelHandle();
 
-	void _layout();
-
 protected:
 	BUTTON_CALL		m_call;
-	JOSprite*		m_img;
-	JOScale9Sprite* m_scaleImg;
+	
 	JOLabel*		m_title;
 	bool			m_bScale;
 	bool			m_bHandleAllTouch;
