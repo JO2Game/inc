@@ -3,7 +3,7 @@
 #define __JODOWNLOADER__
 
 #include <string>
-
+#include <functional>
 #include <mutex>
 
 #include "utils/JOMacro.h"
